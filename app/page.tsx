@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, BookOpen, Brain, Lightbulb, Target, Sparkles, ChevronRight, Star } from "lucide-react"
+import { ArrowRight, BookOpen, Brain, Lightbulb, Target, Sparkles, ChevronRight, Star, Eye, Telescope, Zap, Map as MapIcon, BarChart, Users, Compass, Trophy, ArrowUpCircle, MessageCircle } from "lucide-react"
 import { motion } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
@@ -144,11 +144,12 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <Image
-                src="/hero-illustration.svg"
+                src="https://i.ibb.co/fzhf2Z4k/Chat-GPT-Image-Apr-25-2025-01-33-34-PM-removebg-preview.png"
                 alt="Career Assessment Illustration"
                 fill
                 className="object-contain"
                 priority
+                unoptimized
               />
 
               {/* Floating elements */}
@@ -206,7 +207,7 @@ export default function Home() {
               Epic Quests for Every Level
             </h2>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              Select the perfect adventure for your grade level and unlock the secrets to your future career!
+              Select the perfect adventure for your grade level and unlock the secrets to your future career! Our scientifically designed assessments adapt to your educational stage.
             </p>
           </div>
 
@@ -218,37 +219,45 @@ export default function Home() {
                 {
                   title: "Beginner's Quest",
                   grades: "6th to 8th Grade",
-                  description: "Start your adventure and discover your hidden talents and superpowers!",
+                  description: "Discover your natural talents and interests through fun, age-appropriate activities that introduce career concepts!",
+                  features: ["Personality exploration", "Basic skill identification", "Interactive career introduction"],
                   icon: <BookOpen className="h-10 w-10 text-white" />,
-                  color: "from-[#876FFD] to-[#7057e3]",
+                  bgColor: "#876FFD",
+                  bgColorEnd: "#7057e3",
                 },
                 {
                   title: "Explorer's Journey",
                   grades: "9th to 10th Grade",
-                  description: "Level up your skills and unlock new career paths on your adventure!",
+                  description: "Map your strengths to potential high school subjects and explore career clusters that match your unique abilities!",
+                  features: ["Subject selection guidance", "Career cluster exploration", "Skill development roadmap"],
                   icon: <Lightbulb className="h-10 w-10 text-white" />,
-                  color: "from-[#7057e3] to-[#5e45c4]",
+                  bgColor: "#7057e3",
+                  bgColorEnd: "#5e45c4",
                 },
                 {
                   title: "Hero's Path",
                   grades: "11th to 12th Grade",
-                  description: "Master your abilities and prepare for the next chapter of your epic story!",
+                  description: "Prepare for your next academic adventure with college major recommendations and career path insights!",
+                  features: ["College major alignment", "Career path projection", "Internship recommendations"],
                   icon: <Target className="h-10 w-10 text-white" />,
-                  color: "from-[#5e45c4] to-[#4a35a0]",
+                  bgColor: "#5e45c4",
+                  bgColorEnd: "#4a35a0",
                 },
                 {
                   title: "Legend's Destiny",
                   grades: "Bachelors & Above",
-                  description: "Forge your destiny and become the master of your career universe!",
+                  description: "Refine your professional direction and discover specialized career opportunities aligned with your degree!",
+                  features: ["Industry specialization", "Advanced skill assessment", "Job role matching"],
                   icon: <Brain className="h-10 w-10 text-white" />,
-                  color: "from-[#4a35a0] to-[#19074A]",
-                },
+                  bgColor: "#4a35a0",
+                  bgColorEnd: "#19074A",
+                }
               ].map((test, index) => (
                 <motion.div
                   key={index}
                   className={`rounded-2xl p-6 transition-all duration-300 hover:scale-105 shadow-lg ${index === activeTestIndex ? "ring-4 ring-[#876FFD]/50" : ""}`}
                   style={{
-                    background: `linear-gradient(to bottom right, ${test.color.split(" ")[0].replace("from-", "")} , ${test.color.split(" ")[1].replace("to-", "")})`,
+                    background: `linear-gradient(to bottom right, ${test.bgColor}, ${test.bgColorEnd})`
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -259,7 +268,20 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-white mb-1">{test.title}</h3>
                   <p className="text-sm font-medium text-white/80 mb-3">{test.grades}</p>
                   <p className="text-white/90 mb-4">{test.description}</p>
-                  <Button variant="secondary" className="bg-white/20 hover:bg-white/30 text-white w-full group">
+                  
+                  {/* Features list */}
+                  <div className="mb-4">
+                    <ul className="space-y-2">
+                      {test.features && test.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-white/90">
+                          <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
+                          <span className="text-sm text-white">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <Button variant="secondary" className="bg-white/30 hover:bg-white/50 text-white font-medium w-full group">
                     Start Quest <ChevronRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </motion.div>
@@ -313,7 +335,7 @@ export default function Home() {
                   "See your hidden talents and abilities like never before with our special talent-detecting technology!",
                 icon: (
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#876FFD] to-[#7057e3] flex items-center justify-center">
-                    <Image src="/icon-scientific.svg" alt="Scientific" width={32} height={32} className="text-white" />
+                    <Eye className="h-8 w-8 text-white" />
                   </div>
                 ),
               },
@@ -323,7 +345,7 @@ export default function Home() {
                   "Get a sneak peek into your future career possibilities and see all the amazing paths waiting for you!",
                 icon: (
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#7057e3] to-[#5e45c4] flex items-center justify-center">
-                    <Image src="/icon-analysis.svg" alt="Analysis" width={32} height={32} />
+                    <Telescope className="h-8 w-8 text-white" />
                   </div>
                 ),
               },
@@ -333,7 +355,7 @@ export default function Home() {
                   "Power up your existing skills and discover new ones you can develop to become unstoppable!",
                 icon: (
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#5e45c4] to-[#4a35a0] flex items-center justify-center">
-                    <Image src="/icon-insights.svg" alt="Insights" width={32} height={32} />
+                    <Zap className="h-8 w-8 text-white" />
                   </div>
                 ),
               },
@@ -343,7 +365,7 @@ export default function Home() {
                   "Get personalized quests and missions designed specifically for your grade level and abilities!",
                 icon: (
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#4a35a0] to-[#19074A] flex items-center justify-center">
-                    <Image src="/icon-age.svg" alt="Age Appropriate" width={32} height={32} />
+                    <MapIcon className="h-8 w-8 text-white" />
                   </div>
                 ),
               },
@@ -352,7 +374,7 @@ export default function Home() {
                 description: "See your progress and achievements visualized in awesome, colorful charts and graphs!",
                 icon: (
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#876FFD] to-[#7057e3] flex items-center justify-center">
-                    <Image src="/icon-report.svg" alt="Reports" width={32} height={32} />
+                    <BarChart className="h-8 w-8 text-white" />
                   </div>
                 ),
               },
@@ -362,7 +384,7 @@ export default function Home() {
                   "Connect with career wizards who can guide you on your journey and answer all your questions!",
                 icon: (
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#7057e3] to-[#5e45c4] flex items-center justify-center">
-                    <Image src="/icon-support.svg" alt="Support" width={32} height={32} />
+                    <Users className="h-8 w-8 text-white" />
                   </div>
                 ),
               },
@@ -376,10 +398,26 @@ export default function Home() {
                 whileHover={{ y: -5 }}
               >
                 <div className="mb-4">{benefit.icon}</div>
-                <h3 className="text-xl font-bold bg-gradient-to-r from-[#876FFD] to-[#19074A] text-transparent bg-clip-text mb-3">
+                <h3 className="text-xl font-bold bg-gradient-to-r from-[#876FFD] to-[#19074A] text-transparent bg-clip-text mb-3 flex items-center">
+                  {benefit.title === "Talent Vision" && <Eye className="h-5 w-5 mr-2 text-[#876FFD]" />}
+                  {benefit.title === "Future Sight" && <Telescope className="h-5 w-5 mr-2 text-[#7057e3]" />}
+                  {benefit.title === "Skill Boost" && <Zap className="h-5 w-5 mr-2 text-[#5e45c4]" />}
+                  {benefit.title === "Level-Up Guide" && <MapIcon className="h-5 w-5 mr-2 text-[#4a35a0]" />}
+                  {benefit.title === "Achievement Map" && <BarChart className="h-5 w-5 mr-2 text-[#876FFD]" />}
+                  {benefit.title === "Mentor Connection" && <Users className="h-5 w-5 mr-2 text-[#7057e3]" />}
                   {benefit.title}
                 </h3>
-                <p className="text-gray-700">{benefit.description}</p>
+                <p className="text-gray-700 flex">
+                  <span className="mt-1 mr-2 text-[#876FFD]/70">
+                    {benefit.title === "Talent Vision" && <Sparkles className="h-4 w-4" />}
+                    {benefit.title === "Future Sight" && <Compass className="h-4 w-4" />}
+                    {benefit.title === "Skill Boost" && <Trophy className="h-4 w-4" />}
+                    {benefit.title === "Level-Up Guide" && <ArrowUpCircle className="h-4 w-4" />}
+                    {benefit.title === "Achievement Map" && <Target className="h-4 w-4" />}
+                    {benefit.title === "Mentor Connection" && <MessageCircle className="h-4 w-4" />}
+                  </span>
+                  {benefit.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -415,7 +453,7 @@ export default function Home() {
                   Discover your unique pattern of interests in our cosmic RIASEC model that maps your career universe!
                 </p>
                 <div className="relative h-[200px]">
-                  <Image src="/career-interest-chart.svg" alt="Career Interest Chart" fill className="object-contain" />
+                  <Image src="https://i.ibb.co/qLDxRgyR/Chat-GPT-Image-Apr-25-2025-01-20-12-PM-removebg-preview.png" alt="Career Interest Chart" fill className="object-contain" unoptimized />
                 </div>
               </div>
 
@@ -470,7 +508,7 @@ export default function Home() {
                     </span>
                   </div>
                   <div className="text-sm font-medium px-3 py-1 rounded-full bg-[#876FFD]/10 text-[#876FFD]">
-                    Career Report
+                    Sample Career Report
                   </div>
                 </div>
 
