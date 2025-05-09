@@ -144,13 +144,13 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <Image
-                src="https://i.ibb.co/fzhf2Z4k/Chat-GPT-Image-Apr-25-2025-01-33-34-PM-removebg-preview.png"
-                alt="Career Assessment Illustration"
-                fill
-                className="object-contain"
-                priority
-                unoptimized
-              />
+  src="/herosection.png"
+  alt="Hero Section"
+  layout="fill"
+  objectFit="contain"
+  className="rounded-2xl"
+  priority
+/>
 
               {/* Floating elements */}
               <motion.div
