@@ -6,6 +6,7 @@ interface LogoProps {
   titleColorClass?: string;
   bylineColorClass?: string;
   subtextColorClass?: string;
+  imageSrc?: string;
 }
 
 const Logo: React.FC<LogoProps> = ({
@@ -14,14 +15,15 @@ const Logo: React.FC<LogoProps> = ({
   titleColorClass = 'bg-gradient-to-r from-[#876FFD] to-[#19074A] text-transparent bg-clip-text',
   bylineColorClass = 'text-gray-600',
   subtextColorClass = 'text-gray-500',
+  imageSrc = '/logos/Xcellify-Logo Motif-Favicon.png',
 }) => {
   return (
     <div className="flex items-start gap-2">
       <div className="relative">
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#876FFD] to-[#19074A] rounded-full blur-sm opacity-10 animate-pulse" />
+        {/* <div className="absolute -inset-1 bg-gradient-to-r from-[#876FFD] to-[#19074A] rounded-full blur-sm opacity-10 animate-pulse" /> */}
         <div className="relative">
           <Image
-            src="/logos/Xcellify-Logo Motif-Favicon.png"
+            src={imageSrc}
             alt="Xcel 360° Logo"
             width={40}
             height={40}
