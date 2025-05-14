@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -31,7 +31,7 @@ import { Button } from '@/components/ui/button';
 import Logo from '@/components/commonComponents/Logo';
 import ProfileIndicator from '@/components/header/ProfileIndicator';
 
-export default function Home() {
+function HomeContent() {
   const [activeTestIndex, setActiveTestIndex] = useState(0);
   const searchParams = useSearchParams();
   const [showAuthButtons, setShowAuthButtons] = useState(true);
@@ -1240,5 +1240,13 @@ export default function Home() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
