@@ -1,0 +1,18 @@
+version: v2
+applications:
+  - name: landingpagexcell360
+    run: npm run start
+    build:
+      method: docker
+      dockerfile: Dockerfile
+    env:
+      NODE_ENV: production
+    port: 3000
+    resources:
+      cpu: 0.1
+      memory: 256Mi
+    autoscaling:
+      enabled: true
+      minInstances: 1
+      maxInstances: 3
+      targetCPUUtilizationPercentage: 80
