@@ -647,7 +647,7 @@ function HomeContent() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <div className="relative">
-                      <div className="absolute -inset-1 bg-gradient-to-r from-[#876FFD] to-[#19074A] rounded-full blur-sm opacity-30"></div>
+                      {/* <div className="absolute -inset-1 bg-gradient-to-r from-[#876FFD] to-[#19074A] rounded-full blur-sm opacity-30"></div> */}
                       <div className="relative">
                         <Image
                           src="/logos/Xcellify-Logo Motif-Favicon.png"
@@ -892,7 +892,7 @@ function HomeContent() {
                 transition={{ duration: 0.5, delay: 0.1 * index }}
                 whileHover={{ y: -5 }}
               >
-                <h3 className="text-lg font-bold bg-gradient-to-r from-[#876FFD] to-[#19074A] text-transparent bg-clip-text mb-2">
+                <h3 className="text-lg font-bold bg-[#19074A] text-transparent bg-clip-text mb-2">
                   {faq.question}
                 </h3>
                 <p className="text-gray-700">{faq.answer}</p>
@@ -957,7 +957,7 @@ function HomeContent() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#19074A] text-white py-12">
+      <footer className="bg-gradient-to-b from-purple-primary to-[#6C59CA] text-white py-12">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
@@ -965,6 +965,7 @@ function HomeContent() {
                 titleColorClass="text-xl font-bold"
                 bylineColorClass="text-white/70"
                 subtextColorClass="text-xl font-bold"
+                imageSrc="/logos/Xcellify Logo - White.png"
               />
               <p className="text-white/70">
                 Your magical guide to discovering awesome career adventures and
@@ -1044,91 +1045,79 @@ function HomeContent() {
               </div>
             </div>
             <div>
-              <h3 className="font-bold text-lg mb-4">Quick Links</h3>
+              <h3 className="font-bold text-lg mb-4">Get To Know Us</h3>
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="#"
+                    href="https://xcellify.com/about-us"
                     className="text-white/70 hover:text-white transition-colors"
                   >
-                    Home
+                    About Us
                   </a>
                 </li>
                 <li>
                   <a
-                    href="#tests"
+                    href="https://xcellify.com/carrers-page"
                     className="text-white/70 hover:text-white transition-colors"
                   >
-                    Our Tests
+                    Careers
                   </a>
                 </li>
                 <li>
                   <a
-                    href="#benefits"
+                    href="https://xcellify.com/in-the-news"
                     className="text-white/70 hover:text-white transition-colors"
                   >
-                    Benefits
+                    In The News
                   </a>
                 </li>
                 <li>
                   <a
-                    href="#sample"
+                    href="https://xcellify.com/TermsOfUse#refund-policy"
                     className="text-white/70 hover:text-white transition-colors"
                   >
-                    Sample Report
+                    Refund Policy
                   </a>
                 </li>
                 <li>
                   <a
-                    href="#faq"
+                    href="https://xcellify.com/contact"
                     className="text-white/70 hover:text-white transition-colors"
                   >
-                    FAQ
+                    Contact Us
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="font-bold text-lg mb-4">Resources</h3>
+              <h3 className="font-bold text-lg mb-4">
+                Become Xcellify Partner
+              </h3>
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="#"
+                    href="https://partner.xcellify.com"
                     className="text-white/70 hover:text-white transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    Career Blog
+                    List Your Services
                   </a>
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="https://xcellify.com/affiliate"
                     className="text-white/70 hover:text-white transition-colors"
                   >
-                    Success Stories
+                    Become An Affiliate
                   </a>
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="https://xcellify.com/advertise"
                     className="text-white/70 hover:text-white transition-colors"
                   >
-                    For Parents
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    For Teachers
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    Career Library
+                    Advertise Your Products And Service
                   </a>
                 </li>
               </ul>
@@ -1138,7 +1127,7 @@ function HomeContent() {
               <ul className="space-y-2">
                 <li className="flex items-center gap-2">
                   <svg
-                    className="h-5 w-5 text-[#876FFD]"
+                    className="h-5 w-5 text-white/70"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -1159,7 +1148,7 @@ function HomeContent() {
                 </li>
                 <li className="flex items-center gap-2">
                   <svg
-                    className="h-5 w-5 text-[#876FFD]"
+                    className="h-5 w-5 text-white/70"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
