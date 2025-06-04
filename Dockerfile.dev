@@ -1,0 +1,17 @@
+FROM node:22-slim AS base
+
+# 1. Set working directory
+WORKDIR /app
+
+# 2. Set development environment
+ENV NODE_ENV=development
+
+# 3. Install dependencies only (for faster rebuilds)
+COPY package.json package-lock.json* ./
+RUN npm install --legacy-peer-deps
+
+# 4. Copy all source files
+COPY . .
+
+# 5. Default command
+CMD ["npm", "run", "dev"]
