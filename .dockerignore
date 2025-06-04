@@ -1,0 +1,27 @@
+# Build Artifacts
+node_modules
+.next
+out
+dist
+coverage
+
+# Environment
+.env*
+*.log
+
+# Editor/OS junk
+.DS_Store
+.vscode
+.idea
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose*
+
+
+*.md
+pnpm-lock.yaml
