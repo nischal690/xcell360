@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "serve": "npm run build && npm run start"
+    "serve": "npm run build && npm run start",
+    "export": "next build"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",

@@ -24,7 +24,9 @@ import {
   Trophy,
   ArrowUpCircle,
   MessageCircle,
+  ChevronLeft
 } from 'lucide-react';
+import useEmblaCarousel from 'embla-carousel-react';
 import { motion } from 'framer-motion';
 
 import { Button } from '@/components/ui/button';
@@ -36,6 +38,10 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const [showAuthButtons, setShowAuthButtons] = useState(true);
   const [userName, setUserName] = useState('');
+  const [activeModelIndex, setActiveModelIndex] = useState(0);
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [heroEmblaRef, heroEmblaApi] = useEmblaCarousel({ loop: true });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,6 +49,58 @@ function HomeContent() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    
+    const onSelect = () => {
+      setActiveModelIndex(emblaApi.selectedScrollSnap());
+    };
+    
+    emblaApi.on('select', onSelect);
+    
+    // Auto-advance the carousel every 4 seconds
+    const autoplayInterval = setInterval(() => {
+      if (emblaApi.canScrollNext()) {
+        emblaApi.scrollNext();
+      } else {
+        emblaApi.scrollTo(0);
+      }
+    }, 4000);
+    
+    return () => {
+      emblaApi.off('select', onSelect);
+      clearInterval(autoplayInterval);
+    };
+  }, [emblaApi]);
+  
+  // Hero carousel controls
+  useEffect(() => {
+    if (!heroEmblaApi) return;
+    
+    const onSelect = () => {
+      setActiveHeroIndex(heroEmblaApi.selectedScrollSnap());
+    };
+    
+    heroEmblaApi.on('select', onSelect);
+    
+    // Auto-advance the hero carousel every 5 seconds
+    const autoplayInterval = setInterval(() => {
+      if (heroEmblaApi.canScrollNext()) {
+        heroEmblaApi.scrollNext();
+      } else {
+        heroEmblaApi.scrollTo(0);
+      }
+    }, 5000);
+    
+    return () => {
+      heroEmblaApi.off('select', onSelect);
+      clearInterval(autoplayInterval);
+    };
+  }, [heroEmblaApi]);
+  
+  const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
+  const scrollNext = () => emblaApi && emblaApi.scrollNext();
 
   useEffect(() => {
     const name = searchParams.get('name');
@@ -199,14 +257,64 @@ function HomeContent() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <Image
-                src="/herosection.png"
-                alt="Hero Section"
-                layout="fill"
-                objectFit="contain"
-                className="rounded-2xl"
-                priority
-              />
+              {/* Hero Image Carousel */}
+              <div className="overflow-hidden rounded-2xl w-full h-full relative">
+                <div className="embla" ref={heroEmblaRef}>
+                  <div className="embla__container flex">
+                    <div className="embla__slide flex-[0_0_100%] relative h-[450px]">
+                      <Image
+                        src="/herosection.png"
+                        alt="Hero Section 1"
+                        fill
+                        style={{ objectFit: "contain" }}
+                        className="rounded-2xl"
+                        priority
+                      />
+                      <div className="absolute bottom-8 left-0 right-0 text-center bg-gradient-to-r from-[#876FFD]/80 to-[#19074A]/80 py-3 px-4 mx-4 rounded-lg backdrop-blur-sm">
+                        <h3 className="text-white text-xl font-bold">Discover Your True Potential</h3>
+                        <p className="text-white/80 text-sm mt-1">Stage 1: Self-Discovery & Exploration</p>
+                      </div>
+                    </div>
+                    <div className="embla__slide flex-[0_0_100%] relative h-[450px]">
+                      <Image
+                        src="/hero/stage3.png"
+                        alt="Hero Section 2"
+                        fill
+                        style={{ objectFit: "contain" }}
+                        className="rounded-2xl"
+                      />
+                      <div className="absolute bottom-8 left-0 right-0 text-center bg-gradient-to-r from-[#876FFD]/80 to-[#19074A]/80 py-3 px-4 mx-4 rounded-lg backdrop-blur-sm">
+                        <h3 className="text-white text-xl font-bold">Chart Your Path Forward</h3>
+                        <p className="text-white/80 text-sm mt-1">Stage 2: Career Planning & Development</p>
+                      </div>
+                    </div>
+                    <div className="embla__slide flex-[0_0_100%] relative h-[450px]">
+                      <Image
+                        src="/hero/stage2.png"
+                        alt="Hero Section 3"
+                        fill
+                        style={{ objectFit: "contain" }}
+                        className="rounded-2xl"
+                      />
+                      <div className="absolute bottom-8 left-0 right-0 text-center bg-gradient-to-r from-[#876FFD]/80 to-[#19074A]/80 py-3 px-4 mx-4 rounded-lg backdrop-blur-sm">
+                        <h3 className="text-white text-xl font-bold">Achieve Your Career Excellence</h3>
+                        <p className="text-white/80 text-sm mt-1">Stage 3: Mastery & Leadership</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Carousel navigation dots */}
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+                  {[0, 1, 2].map((index) => (
+                    <button
+                      key={index}
+                      className={`h-2 w-2 rounded-full transition-all ${activeHeroIndex === index ? 'bg-[#876FFD] w-4' : 'bg-[#876FFD]/30'}`}
+                      onClick={() => heroEmblaApi?.scrollTo(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
 
               {/* Floating elements */}
               <motion.div
@@ -235,10 +343,10 @@ function HomeContent() {
             transition={{ duration: 0.5, delay: 0.5 }}
           >
             {[
-              { label: 'Students Helped', value: '50,000+' },
-              { label: 'Career Paths', value: '1,000+' },
+              { label: 'Validated By Students', value: '1000+' },
+              { label: 'Career Paths', value: '100+' },
               { label: 'Success Rate', value: '95%' },
-              { label: 'Satisfaction', value: '4.9/5' },
+              { label: 'Satisfaction', value: '4.5/5' },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#876FFD] to-[#19074A] text-transparent bg-clip-text">
@@ -585,18 +693,86 @@ function HomeContent() {
                 <h3 className="text-xl font-bold text-[#19074A] mb-3">
                   Your Interest Constellation
                 </h3>
-                <p className="text-gray-700 mb-4">
-                  Discover your unique pattern of interests in our cosmic RIASEC
-                  model that maps your career universe!
+                <p className="text-gray-700 mb-4 h-[60px]">
+                  {activeModelIndex === 0 && (
+                    "Discover your unique pattern of interests in our cosmic RIASEC model that maps your career universe!"
+                  )}
+                  {activeModelIndex === 1 && (
+                    "Explore your career anchors based on Edgar Schein's model to understand your core values and motivations!"
+                  )}
+                  {activeModelIndex === 2 && (
+                    "Uncover your multiple intelligences with Howard Gardner's theory to reveal your diverse cognitive strengths!"
+                  )}
+                  {activeModelIndex === 3 && (
+                    "Learn your preferred learning style with the VAK theory to optimize how you absorb and process information!"
+                  )}
                 </p>
-                <div className="relative h-[200px]">
-                  <Image
-                    src="https://i.ibb.co/qLDxRgyR/Chat-GPT-Image-Apr-25-2025-01-20-12-PM-removebg-preview.png"
-                    alt="Career Interest Chart"
-                    fill
-                    className="object-contain"
-                    unoptimized
-                  />
+                <div className="relative overflow-hidden" ref={emblaRef}>
+                  <div className="flex">
+                    {/* External image */}
+                    <div className="flex-[0_0_100%] min-w-0 relative h-[250px] px-4">
+                      <Image
+                        src="https://i.ibb.co/qLDxRgyR/Chat-GPT-Image-Apr-25-2025-01-20-12-PM-removebg-preview.png"
+                        alt="RIASEC Model"
+                        fill
+                        className="object-contain"
+                        unoptimized
+                      />
+                    </div>
+                    {/* Career Anchor model */}
+                    <div className="flex-[0_0_100%] min-w-0 relative h-[250px] px-4">
+                      <Image
+                        src="/models/Career Anchor - Edgar Schein.png"
+                        alt="Career Anchor - Edgar Schein Model"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    {/* Multiple Intelligences model */}
+                    <div className="flex-[0_0_100%] min-w-0 relative h-[250px] px-4">
+                      <Image
+                        src="/models/Howard Gardner's theory of Multiple Intelligences.png"
+                        alt="Howard Gardner's theory of Multiple Intelligences"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    {/* VAK Theory model */}
+                    <div className="flex-[0_0_100%] min-w-0 relative h-[250px] px-4">
+                      <Image
+                        src="/models/vaktheory.png"
+                        alt="VAK Learning Theory"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center mt-4">
+                  <button 
+                    onClick={scrollPrev} 
+                    className="p-2 rounded-full bg-[#876FFD]/10 hover:bg-[#876FFD]/20 transition-colors"
+                    aria-label="Previous model"
+                  >
+                    <ChevronLeft className="h-5 w-5 text-[#876FFD]" />
+                  </button>
+                  <div className="flex space-x-2">
+                    {[0, 1, 2, 3].map((index) => (
+                      <button
+                        key={index}
+                        onClick={() => emblaApi?.scrollTo(index)}
+                        className={`w-2 h-2 rounded-full transition-colors ${activeModelIndex === index ? 'bg-[#876FFD]' : 'bg-[#876FFD]/30'}`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                  <button 
+                    onClick={scrollNext} 
+                    className="p-2 rounded-full bg-[#876FFD]/10 hover:bg-[#876FFD]/20 transition-colors"
+                    aria-label="Next model"
+                  >
+                    <ChevronRight className="h-5 w-5 text-[#876FFD]" />
+                  </button>
                 </div>
               </div>
 
@@ -651,14 +827,14 @@ function HomeContent() {
                       <div className="relative">
                         <Image
                           src="/logos/Xcellify-Logo Motif-Favicon.png"
-                          alt="Xcel 360° Logo"
+                          alt="Xcel360 Logo"
                           width={30}
                           height={30}
                         />
                       </div>
                     </div>
                     <span className="text-lg font-bold bg-gradient-to-r from-[#876FFD] to-[#19074A] text-transparent bg-clip-text">
-                      Xcel 360°
+                      Xcel360
                     </span>
                   </div>
                   <div className="text-sm font-medium px-3 py-1 rounded-full bg-[#876FFD]/10 text-[#876FFD]">
@@ -698,7 +874,7 @@ function HomeContent() {
                         <div className="flex items-center gap-2 mb-1">
                           <Star className="h-4 w-4 text-[#876FFD]" />
                           <h4 className="text-sm font-medium text-[#876FFD]">
-                            Primary Quests
+                            Primary Career Interests
                           </h4>
                         </div>
                         <p className="font-medium">
@@ -710,7 +886,7 @@ function HomeContent() {
                         <div className="flex items-center gap-2 mb-1">
                           <Star className="h-4 w-4 text-[#19074A]" />
                           <h4 className="text-sm font-medium text-[#19074A]">
-                            Side Quests
+                            Side Career Interests
                           </h4>
                         </div>
                         <p className="font-medium">
@@ -783,21 +959,21 @@ function HomeContent() {
               {
                 quote:
                   'This test is like a video game for your future! I discovered I have artistic superpowers I never knew about!',
-                name: 'Priya S.',
-                grade: '12th Grade Student',
+                name: 'Anwesha S.',
+                grade: '11th Grade Student',
                 stars: 5,
               },
               {
                 quote:
                   "So much cooler than boring career tests! The colorful charts showed me I'm destined to be a tech wizard!",
-                name: 'Rahul K.',
+                name: 'Aashi P.',
                 grade: '10th Grade Student',
                 stars: 5,
               },
               {
                 quote:
                   "I was totally lost about what to do after college. This magical test revealed my hidden talents and now I'm excited!",
-                name: 'Ananya M.',
+                name: 'Aarush S.',
                 grade: "Bachelor's Student",
                 stars: 5,
               },
@@ -1038,8 +1214,8 @@ function HomeContent() {
                     viewBox="0 0 24 24"
                     aria-hidden="true"
                   >
-                    <path d="M12.51 8.796v1.697a3.738 3.738 0 0 1 3.288-1.684c3.455 0 4.202 2.16 4.202 4.97V19.5h-3.2v-5.072c0-1.21-.244-2.766-2.128-2.766-1.827 0-2.139 1.317-2.139 2.676V19.5h-3.19V8.796h3.168ZM7.2 6.106a1.61 1.61 0 0 1-.988 1.483 1.595 1.595 0 0 1-1.743-.348A1.607 1.607 0 0 1 5.6 4.5a1.601 1.601 0 0 1 1.6 1.606Z" />
-                    <path d="M7.2 8.809H4V19.5h3.2V8.809Z" />
+                    <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z" />
+                    <path d="M7.2 6.106a1.61 1.61 0 0 1-.988 1.483 1.595 1.595 0 0 1-1.743-.348A1.607 1.607 0 0 1 5.6 4.5a1.601 1.601 0 0 1 1.6 1.606Z" />
                   </svg>
                 </a>
               </div>
@@ -1185,7 +1361,7 @@ function HomeContent() {
           </div>
           <div className="border-t border-white/10 mt-8 pt-8 text-center">
             <p className="text-white/50">
-              © {new Date().getFullYear()} Xcel 360°. All rights reserved. Made
+              {new Date().getFullYear()} Xcel360. All rights reserved. Made
               with ❤️ for students.
             </p>
             <div className="space-x-4">

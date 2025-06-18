@@ -11,7 +11,7 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({
   showSubtext = true,
-  showByline = true,
+  showByline = false,
   titleColorClass = 'bg-gradient-to-r from-[#876FFD] to-[#19074A] text-transparent bg-clip-text',
   bylineColorClass = 'text-gray-600',
   subtextColorClass = 'text-gray-500',
@@ -24,7 +24,7 @@ const Logo: React.FC<LogoProps> = ({
         <div className="relative">
           <Image
             src={imageSrc}
-            alt="Xcel 360° Logo"
+            alt="Xcel360 Logo"
             width={40}
             height={40}
             className="h-10 w-10"
@@ -35,7 +35,7 @@ const Logo: React.FC<LogoProps> = ({
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
           <span className={`text-xl font-bold ${titleColorClass}`}>
-            Xcel 360°
+            Xcel360
           </span>
           {showByline && (
             <span
